@@ -2,16 +2,15 @@
 
 namespace Tests;
 
-use Admin\Models\Stuff;
-
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StuffTest extends TestCase
 {
 
+    use RefreshDatabase;
+
     public function testStuffRegisterTest()
     {
-        Stuff::where('username', 'bbbb')->delete();
-
         $this->assertDatabaseMissing('stuffs', [
             'username' => 'bbbb'
         ]);
