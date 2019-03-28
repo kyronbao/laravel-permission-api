@@ -52,9 +52,15 @@ class BaseService
     }
 
 
-    protected function outputError($msg = 'Logic error', $data = [])
+    protected function outputError($error = ['code'=>11000,'msg'=>'Logic error'])
     {
-        return $this->output(self::OUTPUT_ERROR, $msg, $data);
+        $this->code = $error['code'];
+        $this->msg = $error['msg'];
+
+        return response([
+            'code'  => $this->code,
+            'msg'   => $this->msg,
+        ]);
     }
 
 
