@@ -40,9 +40,20 @@ class StuffTest extends TestCase
             'password' => '123456'
         ]);
 
-        $response->assertJson(OUTPUT_LOGGED_IN);
+        $response->assertJson(OUTPUT_OK);
 
         $response->assertCookie('admin_token');
     }
+
+    public function test_get_stuff_info_with_cookie()
+    {
+        factory(\Admin\Models\Stuff::class)->create();
+        $response = $this->call('GET', '/admin/stuff', [], [
+            'admin_token' => md5(123456)
+        ]);
+        $response->assertJson(OUTPUT_OK);
+
+    }
+
 
 }

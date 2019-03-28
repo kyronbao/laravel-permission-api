@@ -64,6 +64,16 @@ class CookieGuard implements Guard
         if (!is_null($this->user)) {
             return $this->user;
         }
+
+        $user = null;
+
+        $admin_token = $this->request->cookies->get('admin_token');
+
+        if (!empty($admin_token)) {
+            $user = $this->provider->retrieveByToken('admin_token', $admin_token);
+        }
+
+        return $this->user = $user;
     }
 
 
@@ -86,12 +96,6 @@ class CookieGuard implements Guard
      */
     public function validate(Array $credentials = [])
     {
-        //TODO
-//        if (empty($credentials['username']) || empty($credentials['password'])) {
-//            if (!$credentials=$this->getCookieParams()) {
-//                return false;
-//            }
-//        }
 
         /**
          * Get credentials params by login data
@@ -104,9 +108,10 @@ class CookieGuard implements Guard
             $this->setUser($user);
 
             return true;
-        } else {
-            return false;
         }
+
+        return false;
+
     }
 
     /**

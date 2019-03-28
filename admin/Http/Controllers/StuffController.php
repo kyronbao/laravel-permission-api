@@ -20,4 +20,10 @@ class StuffController
         return StuffService::server()->login($params);
     }
 
+    public function getStuff(Request $request)
+    {
+
+        return StuffService::server()->getStuff($request);
+    }
+
 }

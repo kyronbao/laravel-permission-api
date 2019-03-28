@@ -24,10 +24,19 @@ class StuffService extends BaseService
 
     public function login($params)
     {
+        $guard = Auth::guard('admin');
 
-        if (Auth::guard('admin')->validate()) {
-            return $this->outputError(OUTPUT_LOGGED_IN)
-                ->withCookie($this->generateCookie($this->generateToken()));
+        if ($guard->user()) {
+            return $this->outputError(OUTPUT_LOGGED_IN);
+        }
+
+        if ($guard->validate()) {
+            $stuff = $guard->user();
+            $stuff->admin_token = $this->generateToken();
+            $stuff->save();
+
+            return $this->outputSuccess($stuff, 'Login done')
+                ->withCookie($this->generateCookie($stuff->admin_token));
         }
         return $this->register($params);
     }
@@ -45,6 +54,13 @@ class StuffService extends BaseService
 
         return $this->outputSuccess($stuff, 'Register done')
         ->withCookie($this->generateCookie($params[self::TOKEN_NAME]));
+    }
+
+    public function getStuff()
+    {
+        if ($stuff = Auth::Guard('admin')->user()) {
+            return $this->outputSuccess($stuff);
+        }
     }
 
 

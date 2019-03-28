@@ -29,6 +29,6 @@ $factory->define(Admin\Models\Stuff::class, function (Faker $faker) {
     return [
         'username' => 'bbbb',
         'password' => md5(123456),
-        'admin_token' => 123456,
+        'admin_token' => md5(123456),
     ];
 });

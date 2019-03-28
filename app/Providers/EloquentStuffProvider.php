@@ -68,6 +68,9 @@ class EloquentStuffProvider implements UserProvider
 
     public function retrieveByToken($identifier, $token)
     {
+        return $this->model->where(
+            $identifier, $token
+        )->first();
     }
 
     public function updateRememberToken(Authenticatable $user, $token)
