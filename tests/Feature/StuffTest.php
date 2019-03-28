@@ -9,7 +9,7 @@ class StuffTest extends TestCase
 
     use RefreshDatabase;
 
-    public function testStuffRegisterTest()
+    public function test_stuff_register()
     {
         $this->assertDatabaseMissing('stuffs', [
             'username' => 'bbbb'
@@ -28,6 +28,21 @@ class StuffTest extends TestCase
         $this->assertDatabaseHas('stuffs', [
             'username' => 'bbbb'
         ]);
+    }
+
+    public function test_login_with_username_password()
+    {
+        factory(\Admin\Models\Stuff::class)->create();
+
+        $response = $this->post('/admin/login', [
+            'username' => 'bbbb',
+            'user' => 'Jim',
+            'password' => '123456'
+        ]);
+
+        $response->assertJson(OUTPUT_LOGGED_IN);
+
+        $response->assertCookie('admin_token');
     }
 
 }

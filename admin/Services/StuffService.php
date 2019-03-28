@@ -10,6 +10,7 @@ namespace Admin\Services;
 
 use Admin\Models\Stuff;
 use App\Services\BaseService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Cookie;
 
@@ -23,6 +24,11 @@ class StuffService extends BaseService
 
     public function login($params)
     {
+
+        if (Auth::guard('admin')->validate()) {
+            return $this->outputError(OUTPUT_LOGGED_IN)
+                ->withCookie($this->generateCookie($this->generateToken()));
+        }
         return $this->register($params);
     }
 
