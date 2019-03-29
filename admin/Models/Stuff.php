@@ -10,11 +10,13 @@ namespace Admin\Models;
 
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class Stuff extends Model implements AuthenticatableContract
 {
 
+    use HasRoles;
 
 
     /**
