@@ -20,7 +20,7 @@ class StuffService extends BaseService
     public $stuff;
     const TOKEN_LENGTH  = 32;
     const TOKEN_NAME    = 'admin_token';
-    const TOKEN_EXPIRE  = 10;
+    const TOKEN_EXPIRE = 7 * 24 * 60 * 60;
 
     public function login($params)
     {
