@@ -51,6 +51,6 @@ class Handler extends ExceptionHandler
             return response(OUTPUT_NOT_LOGGED, 401);
         }
 
-        return parent::render($request, $e);
+        return $e;
     }
 }
