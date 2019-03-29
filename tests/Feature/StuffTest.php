@@ -55,5 +55,12 @@ class StuffTest extends TestCase
 
     }
 
+    public function test_cannot_get_stuff_info_without_cookie()
+    {
+        factory(\Admin\Models\Stuff::class)->create();
+        $response = $this->call('GET', '/admin/stuff');
+        $response->assertJson(OUTPUT_NOT_LOGGED);
+    }
+
 
 }

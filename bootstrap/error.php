@@ -9,6 +9,11 @@ const OUTPUT_OK = [
 ];
 
 const OUTPUT_LOGGED_IN = [
-    'code' => 60100,
+    'code' => 10100,
     'msg' => 'Has logged in'
+];
+
+const OUTPUT_NOT_LOGGED = [
+    'code' => 10401,
+    'msg' => 'Not logged'
 ];
