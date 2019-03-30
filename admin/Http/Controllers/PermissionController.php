@@ -24,9 +24,9 @@ class PermissionController
         return PermissionService::server()->getRoles();
     }
 
-    public function postMenus(Request $request)
+    public function postRoutes(Request $request)
     {
-        return PermissionService::server()->postMenus($request);
+        return PermissionService::server()->postRoutes($request);
     }
 
     public function getMenus()

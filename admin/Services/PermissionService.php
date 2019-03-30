@@ -8,8 +8,7 @@
 
 namespace Admin\Services;
 
-
-use App\Models\Menu;
+use Admin\Models\Menu;
 use App\Services\BaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -19,13 +18,12 @@ use Spatie\Permission\Models\Role;
 
 class PermissionService extends BaseService
 {
-    public $menu;
+
     public $role;
     public $permission;
 
     public function __construct()
     {
-        $this->menu = new Menu();
         $this->role = new Role(['guard_name' => 'admin']);
         $this->permission = new Permission(['guard_name' => 'admin']);
     }
@@ -75,14 +73,14 @@ class PermissionService extends BaseService
         return $this->outputSuccess($this->role->get());
     }
 
-    public function postMenus(Request $request)
+    public function postRoutes(Request $request)
     {
-        return $this->batchSync($this->menu, $request->all(), 'key');
+        return $this->batchSync($this->permission, $request->all(), 'name');
     }
 
     public function getMenus()
     {
-        return $this->outputSuccess($this->menu->get());
+        return $this->outputSuccess((new Menu)->getMenuRows());
     }
 
     public function postRolesViaUser(Request $request)
