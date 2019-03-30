@@ -15,6 +15,8 @@ class PermissionTest extends TestCase
      * test_post_roles,
      * test_get_menus,
      * test_post_munes
+     * post_roles_via_user
+     * post_routes_via_role
      * 由于逻辑大体相同，所以不写测试了
      *
      */

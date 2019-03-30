@@ -18,6 +18,13 @@ class Stuff extends Model implements AuthenticatableContract
 
     use HasRoles;
 
+    /**
+     * Set Guard name for syncRoles in PermissionService
+     *
+     * @var string
+     */
+    public $guard_name = 'admin';
+
 
     /**
      * The attributes excluded from the model's JSON form.

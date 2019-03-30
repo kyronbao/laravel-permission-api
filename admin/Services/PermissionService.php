@@ -13,6 +13,7 @@ use App\Models\Menu;
 use App\Services\BaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -82,6 +83,23 @@ class PermissionService extends BaseService
     public function getMenus()
     {
         return $this->outputSuccess($this->menu->get());
+    }
+
+    public function postRolesViaUser(Request $request)
+    {
+        $stuff = Auth::guard('admin')->user();
+        $roles = $request->input('roles');
+
+        return $stuff->syncRoles($roles);
+    }
+
+    public function postRoutesViaRole(Request $request)
+    {
+        $role_name = $request->input('role');
+        $routes = $request->input('routes');
+        $role = Role::findByName($role_name);
+
+        return $role->syncPermissions($routes);
     }
 
 }
