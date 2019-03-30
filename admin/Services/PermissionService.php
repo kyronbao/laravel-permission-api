@@ -9,10 +9,10 @@
 namespace Admin\Services;
 
 use Admin\Models\Menu;
+use Admin\Models\Stuff;
 use App\Services\BaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -85,7 +85,7 @@ class PermissionService extends BaseService
 
     public function postRolesViaUser(Request $request)
     {
-        $stuff = Auth::guard('admin')->user();
+        $stuff = Stuff::find($request->input('stuff_id'));
         $roles = $request->input('roles');
 
         return $stuff->syncRoles($roles);
