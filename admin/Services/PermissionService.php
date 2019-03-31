@@ -81,7 +81,7 @@ class PermissionService extends BaseService
 
     public function getMenus()
     {
-        return $this->outputSuccess((new Menu)->getMenuRows());
+        return $this->outputSuccess((new Menu)->getMenuTree());
     }
 
     public function postRolesViaUser(Request $request)

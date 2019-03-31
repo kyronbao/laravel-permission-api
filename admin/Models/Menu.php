@@ -8,6 +8,7 @@
 
 namespace Admin\Models;
 
+use App\Helpers\ArrHelper;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 
@@ -24,5 +25,10 @@ class Menu extends Permission
             return $this->get();
         }
         return $stuff->getAllPermissions();
+    }
+
+    public function getMenuTree()
+    {
+        return ArrHelper::array2Tree($this->getMenuRows()->toArray());
     }
 }
