@@ -96,7 +96,7 @@ class PermissionService extends BaseService
     {
         $role_name = $request->input('role');
         $routes = $request->input('routes');
-        $role = Role::findByName($role_name);
+        $role = Role::findByName($role_name, Stuff::GUARD);
 
         return $role->syncPermissions($routes);
     }
