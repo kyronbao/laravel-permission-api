@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Admin\Http\Controllers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -54,8 +55,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -68,9 +69,9 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
 
     /**
@@ -82,11 +83,19 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapAdminRoutes()
     {
+        Route::post('admin/login', Controllers\StuffController::class . '@login');
+
         Route::prefix('admin')
             ->middleware('auth:admin')
-            ->middleware('auth.admin.route')
-            ->group(base_path('routes/admin.php'));
+            ->group(
+                function () {
+                    Route::get('get-menus', Controllers\PermissionController::class . '@getMenus');
+                    Route::get('/stuff', Controllers\StuffController::class . '@getStuff');
 
-        Route::post('admin/login', \Admin\Http\Controllers\StuffController::class . '@login');
+                    Route::middleware('auth.admin.route')->group(
+                        base_path('routes/admin.php')
+                    );
+                }
+            );
     }
 }
