@@ -18,12 +18,14 @@ class Stuff extends Model implements AuthenticatableContract
 
     use HasRoles;
 
+    const GUARD = 'admin';
+
     /**
      * Set Guard name for syncRoles in PermissionService
      *
      * @var string
      */
-    public $guard_name = 'admin';
+    public $guard_name = self::GUARD;
 
 
     /**
