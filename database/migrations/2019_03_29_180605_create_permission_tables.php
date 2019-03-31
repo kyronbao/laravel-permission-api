@@ -21,9 +21,9 @@ class CreatePermissionTables extends Migration
             $table->string('name');
             $table->string('guard_name');
             $table->tinyInteger('is_menu')->default(0);
-            $table->string('path', 64)->default('');
-            $table->string('name_cn', 32)->default('');
-            $table->string('icon', 64)->default('');
+            $table->string('path', 64)->nullable();
+            $table->string('name_cn', 32)->nullable();
+            $table->string('icon', 64)->nullable();
             $table->smallInteger('parent')->default(0);
             $table->timestamps();
         });
