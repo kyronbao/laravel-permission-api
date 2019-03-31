@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Auth\AuthAdminRouteException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -48,7 +49,9 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if ($e instanceof AuthenticationException) {
-            return response(OUTPUT_NOT_LOGGED, 401);
+            return response(OUTPUT_NOT_LOGGED);
+        } elseif ($e instanceof AuthAdminRouteException) {
+            return response(OUTPUT_FORBIDDEN);
         }
 
         return $e;

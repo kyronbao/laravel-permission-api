@@ -13,6 +13,7 @@ use Admin\Models\Stuff;
 use App\Services\BaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -98,6 +99,13 @@ class PermissionService extends BaseService
         $role = Role::findByName($role_name);
 
         return $role->syncPermissions($routes);
+    }
+
+
+    public function getAuthRoutes()
+    {
+        $stuff = Auth::guard('admin')->user();
+        return $stuff->getAllPermissions()->pluck('path')->toArray();
     }
 
 }

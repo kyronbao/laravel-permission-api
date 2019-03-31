@@ -84,6 +84,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('admin')
             ->middleware('auth:admin')
+            ->middleware('auth.admin.route')
             ->group(base_path('routes/admin.php'));
 
         Route::post('admin/login', \Admin\Http\Controllers\StuffController::class . '@login');
