@@ -8,6 +8,7 @@
 
 namespace Admin\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 
 
@@ -17,6 +18,11 @@ class Menu extends Permission
 
     public function getMenuRows()
     {
-        return static::where('is_menu', self::IS_MENU)->get();
+        /** @var Stuff $stuff */
+        $stuff = Auth::guard(Stuff::GUARD)->user();
+        if ($stuff->hasRole('super-admin')) {
+            return $this->get();
+        }
+        return $stuff->getAllPermissions();
     }
 }
