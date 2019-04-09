@@ -9,6 +9,7 @@
 namespace Admin\Services;
 
 use Admin\Models\Stuff;
+use App\Exceptions\Err;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -27,7 +28,7 @@ class StuffService extends BaseService
         $guard = Auth::guard('admin');
 
         if ($guard->user()) {
-            return $this->outputError(OUTPUT_LOGGED_IN);
+            return $this->outputError(Err::AUTH_LOGGED_IN);
         }
 
         if ($guard->validate()) {
