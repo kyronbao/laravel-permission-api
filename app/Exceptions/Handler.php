@@ -6,6 +6,7 @@ use App\Exceptions\Auth\AuthAdminRouteException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -48,10 +49,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($e instanceof AuthenticationException) {
-            return response(OUTPUT_NOT_LOGGED);
+        if ($e instanceof ValidationException) {
+            return response(['code' => Err::VALIDATE_CODE, 'msg' => $e->errors()]);
+        } elseif ($e instanceof AuthenticationException) {
+            return response(Err::AUTH_NOT_LOGGED);
         } elseif ($e instanceof AuthAdminRouteException) {
-            return response(OUTPUT_FORBIDDEN);
+            return response(Err::AUTH_FORBIDDEN);
         }
 
         return $e;

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\Err;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -22,7 +23,7 @@ class StuffTest extends TestCase
             'password'  => '123456'
         ]);
 
-        $response->assertJson(OUTPUT_OK);
+        $response->assertJson(Err::OUTPUT_OK);
 
         $response->assertCookie('admin_token');
 
@@ -41,7 +42,7 @@ class StuffTest extends TestCase
             'password' => '123456'
         ]);
 
-        $response->assertJson(OUTPUT_OK);
+        $response->assertJson(Err::OUTPUT_OK);
 
         $response->assertCookie('admin_token');
     }
@@ -52,7 +53,7 @@ class StuffTest extends TestCase
         $response = $this->call('GET', '/admin/stuff', [], [
             'admin_token' => md5(123456)
         ]);
-        $response->assertJson(OUTPUT_OK);
+        $response->assertJson(Err::OUTPUT_OK);
 
     }
 
@@ -60,7 +61,7 @@ class StuffTest extends TestCase
     {
         factory(\Admin\Models\Stuff::class)->create();
         $response = $this->call('GET', '/admin/stuff');
-        $response->assertJson(OUTPUT_NOT_LOGGED);
+        $response->assertJson(Err::AUTH_NOT_LOGGED);
     }
 
 

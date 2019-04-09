@@ -46,13 +46,13 @@ class BaseService
     }
 
 
-    protected function outputSuccess($data = [], $msg = '')
+    public function outputSuccess($data = [], $msg = '')
     {
         return $this->output(self::OUTPUT_SUCCESS, $msg, $data);
     }
 
 
-    protected function outputError($error = ['code'=>11000,'msg'=>'Logic error'])
+    public function outputError($error = ['code' => 11000, 'msg' => 'Logic error'])
     {
         $this->code = $error['code'];
         $this->msg = $error['msg'];
@@ -74,8 +74,7 @@ class BaseService
         return $this->data;
     }
 
-
-    protected function output($code, $msg = '', $data = [])
+    public function output($code, $msg = '', $data = [])
     {
         $this->code = $code;
         $this->msg = $msg;

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\Err;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,6 +29,6 @@ class PermissionTest extends TestCase
         $response = $this->call('GET', 'admin/get-roles', [], [
             'admin_token' => md5(123456)
         ]);
-        $response->assertJson(OUTPUT_OK);
+        $response->assertJson(Err::OUTPUT_OK);
     }
 }
