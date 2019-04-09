@@ -11,7 +11,6 @@ class Err
     const AUTH_NOT_LOGGED = ['code' => 10401, 'msg' => 'Not logged'];
     const AUTH_UNAUTHORIZED = ['code' => 11401, 'msg' => 'Unauthorized'];
     const AUTH_FORBIDDEN = ['code' => 10403, 'msg' => 'Forbidden'];
-    const AUTH_HAS_EXISTS = ['code' => 10600, 'msg' => 'User has exists'];
 
-    const VALIDATE_CODE = 20100;
+    const VALIDATE_CODE = 30100;
 }
