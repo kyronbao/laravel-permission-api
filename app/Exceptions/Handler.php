@@ -49,6 +49,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        $e = $this->prepareException($e);
+
         if ($e instanceof ValidationException) {
             return response(['code' => Err::VALIDATE_CODE, 'msg' => $e->errors()]);
         } elseif ($e instanceof AuthenticationException) {
@@ -57,6 +59,6 @@ class Handler extends ExceptionHandler
             return response(Err::AUTH_FORBIDDEN);
         }
 
-        return $e;
+        return $this->prepareJsonResponse($request, $e);
     }
 }
