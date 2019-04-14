@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Admin\Models\Stuff;
 use App\Guards\CookieGuard;
+use App\Guards\CustomTokenGuard;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,10 +33,14 @@ class AuthServiceProvider extends ServiceProvider
             return new EloquentStuffProvider($app->make(Stuff::class));
         });
 
-        // add admin guard
+        // add admin guard driver
         Auth::extend('cookie', function ($app, $name, array $config) {
             return new CookieGuard(Auth::createUserProvider($config['provider']), $app->make('request'));
         });
-        //
+
+        /** Add api guard driver custom_token **/
+        Auth::extend('custom_token', function ($app, $name, array $config) {
+            return new CustomTokenGuard(Auth::createUserProvider($config['provider']), $app->make('request'));
+        });
     }
 }
