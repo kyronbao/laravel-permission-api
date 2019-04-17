@@ -29,6 +29,11 @@ class Menu extends Permission
 
     public function getMenuTree()
     {
-        return ArrHelper::array2Tree($this->getMenuRows()->toArray());
+        $menuRows = $this->getMenuRows()->toArray();
+
+        if (empty($menuRows)) {
+            return [];
+        }
+        return ArrHelper::array2Tree($menuRows);
     }
 }
