@@ -14,21 +14,21 @@ class StuffTest extends TestCase
     public function test_stuff_register()
     {
         $this->assertDatabaseMissing('stuffs', [
-            'username' => 'bbbb'
+            'username' => 'kyronbao'
         ]);
 
         $response = $this->post('/admin/login', [
-            'username'  => 'bbbb',
+            'username' => 'kyronbao',
             'user'      => 'Jim',
-            'password'  => '123456'
+            'password' => '12345678'
         ]);
 
-        $response->assertJson(Err::OUTPUT_OK);
+        $response->assertJsonFragment(['username' => 'kyronbao']);
 
         $response->assertCookie('admin_token');
 
         $this->assertDatabaseHas('stuffs', [
-            'username' => 'bbbb'
+            'username' => 'kyronbao'
         ]);
     }
 
@@ -37,12 +37,12 @@ class StuffTest extends TestCase
         factory(\Admin\Models\Stuff::class)->create();
 
         $response = $this->post('/admin/login', [
-            'username' => 'bbbb',
+            'username' => 'kyronbao',
             'user' => 'Jim',
-            'password' => '123456'
+            'password' => '12345678'
         ]);
 
-        $response->assertJson(Err::OUTPUT_OK);
+        $response->assertJsonFragment(['username' => 'kyronbao']);
 
         $response->assertCookie('admin_token');
     }
@@ -51,7 +51,7 @@ class StuffTest extends TestCase
     {
         factory(\Admin\Models\Stuff::class)->create();
         $response = $this->call('GET', '/admin/stuff', [], [
-            'admin_token' => md5(123456)
+            'admin_token' => 'token_string'
         ]);
         $response->assertJson(Err::OUTPUT_OK);
 
