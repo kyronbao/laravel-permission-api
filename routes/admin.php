@@ -11,4 +11,6 @@ Route::post('post-routes', Controllers\PermissionController::class . '@postRoute
 
 
 Route::post('post-roles-via-user', Controllers\PermissionController::class . '@postRolesViaUser');
+Route::get('get-roles-via-user', Controllers\PermissionController::class . '@getRolesViaUser');
 Route::post('post-routes-via-role', Controllers\PermissionController::class . '@postRoutesViaRole');
+Route::get('get-permissions-via-role', Controllers\PermissionController::class . '@getPermissionsViaRole');

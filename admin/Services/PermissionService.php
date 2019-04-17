@@ -92,6 +92,14 @@ class PermissionService extends BaseService
         return $stuff->syncRoles($roles);
     }
 
+    public function getRolesViaUser(Request $request)
+    {
+        /** @var Stuff $stuff */
+        $stuff = Stuff::findOrFail($request->input('id'));
+
+        return $stuff->roles;
+    }
+
     public function postRoutesViaRole(Request $request)
     {
         $role_name = $request->input('role');
@@ -106,6 +114,15 @@ class PermissionService extends BaseService
     {
         $stuff = Auth::guard('admin')->user();
         return $stuff->getAllPermissions()->pluck('path')->toArray();
+    }
+
+    public function getPermissionsViaRole(Request $request)
+    {
+        $role_id = $request->input('id');
+        /** @var Role $role */
+        $role = Role::findById($role_id, Stuff::GUARD);
+        return $role->getAllPermissions();
+
     }
 
 }
