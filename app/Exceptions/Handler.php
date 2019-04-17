@@ -3,10 +3,12 @@
 namespace App\Exceptions;
 
 use App\Exceptions\Auth\AuthAdminRouteException;
+use App\Helpers\Env;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -57,6 +59,13 @@ class Handler extends ExceptionHandler
             return response(Err::AUTH_NOT_LOGGED);
         } elseif ($e instanceof AuthAdminRouteException) {
             return response(Err::AUTH_FORBIDDEN);
+        }
+
+        if ($e instanceof NotFoundHttpException) {
+            if (config('app.env') === Env::PROD) {
+                return response(Err::DATA_NOT_FOUND);
+            }
+            return response(['code' => Err::DATA_NOT_FOUND['code'], 'msg' => $e->getMessage()]);
         }
 
         return $this->prepareJsonResponse($request, $e);

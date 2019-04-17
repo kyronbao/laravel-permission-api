@@ -13,4 +13,6 @@ class Err
     const AUTH_FORBIDDEN = ['code' => 10403, 'msg' => 'Forbidden'];
 
     const VALIDATE_CODE = 30100;
+
+    const DATA_NOT_FOUND = ['code' => 30200, 'msg' => 'Data not found'];
 }
