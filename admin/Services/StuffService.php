@@ -10,6 +10,7 @@ namespace Admin\Services;
 
 use Admin\Models\Stuff;
 use App\Exceptions\Err;
+use App\Guards\CookieGuard;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -40,7 +41,7 @@ class StuffService extends BaseService
             $stuff->save();
 
             return $this->outputSuccess($stuff, 'Login done')
-                ->withCookie($this->generateCookie($admin_token));
+                ->withCookie($this->generateCookie($admin_token, self::TOKEN_EXPIRE));
         }
         return $this->register($params);
     }
@@ -58,7 +59,18 @@ class StuffService extends BaseService
         $stuff->save();
 
         return $this->outputSuccess($stuff, 'Register done')
-            ->withCookie($this->generateCookie($admin_token));
+            ->withCookie($this->generateCookie($admin_token, self::TOKEN_EXPIRE));
+    }
+
+    public function logout()
+    {
+        /** @var CookieGuard $guard */
+        $guard = Auth::guard('admin');
+
+        $guard->logout();
+
+        return $this->outputSuccess([], 'Logout done')
+            ->cookie($this->generateCookie('', 0));
     }
 
     public function getStuff()
@@ -69,8 +81,8 @@ class StuffService extends BaseService
     }
 
 
-    private function generateCookie($cookie_value)
+    private function generateCookie($cookie_value, $expire)
     {
-        return new Cookie(self::TOKEN_NAME, $cookie_value, time()+self::TOKEN_EXPIRE);
+        return new Cookie(self::TOKEN_NAME, $cookie_value, time() + $expire);
     }
 }

@@ -64,5 +64,21 @@ class StuffTest extends TestCase
         $response->assertJson(Err::AUTH_NOT_LOGGED);
     }
 
+    public function test_logout()
+    {
+        factory(\Admin\Models\Stuff::class)->create();
+        $response = $this->call('POST', '/admin/logout', [], [
+            'admin_token' => 'token_string'
+        ]);
+        $response->assertJson(Err::OUTPUT_OK);
+    }
+
+    public function test_cannot_logout_without_cookie()
+    {
+        factory(\Admin\Models\Stuff::class)->create();
+        $response = $this->call('POST', '/admin/logout');
+        $response->assertJson(Err::AUTH_NOT_LOGGED);
+    }
+
 
 }

@@ -26,4 +26,9 @@ class StuffController
         return StuffService::server()->getStuff($request);
     }
 
+    public function logout()
+    {
+        return StuffService::server()->logout();
+    }
+
 }

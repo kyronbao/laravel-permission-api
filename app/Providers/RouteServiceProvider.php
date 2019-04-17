@@ -97,7 +97,8 @@ class RouteServiceProvider extends ServiceProvider
             ->group(
                 function () {
                     Route::get('get-menus', Controllers\PermissionController::class . '@getMenus');
-                    Route::get('/stuff', Controllers\StuffController::class . '@getStuff');
+                    Route::get('stuff', Controllers\StuffController::class . '@getStuff');
+                    Route::post('logout', Controllers\StuffController::class . '@logout');
 
                     Route::middleware('auth.admin.route')->group(
                         base_path('routes/admin.php')

@@ -125,4 +125,15 @@ class CookieGuard implements Guard
         $this->user = $user;
         return $this;
     }
+
+    /**
+     * logout
+     */
+    public function logout()
+    {
+        $user = $this->user;
+        $user->admin_token = '';
+        $user->save();
+        $this->user = null;
+    }
 }
