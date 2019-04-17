@@ -12,6 +12,7 @@ use Admin\Models\Stuff;
 use App\Exceptions\Err;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Cookie;
 
@@ -19,7 +20,7 @@ class StuffService extends BaseService
 {
 
     public $stuff;
-    const TOKEN_LENGTH  = 32;
+    const TOKEN_LENGTH = 8;
     const TOKEN_NAME    = 'admin_token';
     const TOKEN_EXPIRE = 7 * 24 * 60 * 60;
 
@@ -32,21 +33,24 @@ class StuffService extends BaseService
         }
 
         if ($guard->validate()) {
+            $admin_token = Str::random(self::TOKEN_LENGTH);
+
             $stuff = $guard->user();
-            $stuff->admin_token = $this->generateToken();
+            $stuff->admin_token = hash('sha256', $admin_token);
             $stuff->save();
 
             return $this->outputSuccess($stuff, 'Login done')
-                ->withCookie($this->generateCookie($stuff->admin_token));
+                ->withCookie($this->generateCookie($admin_token));
         }
         return $this->register($params);
     }
 
     public function register($params)
     {
-        $params[self::TOKEN_NAME] = $this->generateToken();
+        $admin_token = Str::random(self::TOKEN_LENGTH);
 
-        $params['password'] = $this->generatePassword($params);
+        $params[self::TOKEN_NAME] = hash('sha256', $admin_token);
+        $params['password'] = Hash::make($params['password']);
 
         $stuff = new Stuff();
         $stuff->fillable(array_keys($params));
@@ -54,7 +58,7 @@ class StuffService extends BaseService
         $stuff->save();
 
         return $this->outputSuccess($stuff, 'Register done')
-        ->withCookie($this->generateCookie($params[self::TOKEN_NAME]));
+            ->withCookie($this->generateCookie($admin_token));
     }
 
     public function getStuff()
@@ -64,16 +68,6 @@ class StuffService extends BaseService
         }
     }
 
-
-    private function generateToken()
-    {
-        return hash('sha256', Str::random(self::TOKEN_LENGTH));
-    }
-
-    private function generatePassword($params)
-    {
-        return md5($params['password']);
-    }
 
     private function generateCookie($cookie_value)
     {

@@ -70,7 +70,7 @@ class CookieGuard implements Guard
         $admin_token = $this->request->cookies->get('admin_token');
 
         if (!empty($admin_token)) {
-            $user = $this->provider->retrieveByToken('admin_token', $admin_token);
+            $user = $this->provider->retrieveByToken('admin_token', hash('sha256', $admin_token));
         }
 
         return $this->user = $user;

@@ -12,6 +12,7 @@ namespace App\Providers;
 use Admin\Models\Stuff;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Support\Facades\Hash;
 
 class EloquentStuffProvider implements UserProvider
 {
@@ -59,7 +60,7 @@ class EloquentStuffProvider implements UserProvider
     {
 
         return ($credentials['username'] == $user->getAuthIdentifier() &&
-            md5($credentials['password']) == $user->getAuthPassword());
+            Hash::check($credentials['password'], $user->getAuthPassword()));
     }
 
     public function retrieveById($identifier)
