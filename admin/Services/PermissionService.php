@@ -31,7 +31,8 @@ class PermissionService extends BaseService
 
     public function postRoles(Request $request)
     {
-        return $this->batchSync($this->role, $request->all(), 'name');
+        $this->batchSync($this->role, $request->all(), 'name');
+        return responseOk([], 'Batch post done');
     }
 
     public function batchSync($model, $params, $index)
@@ -65,12 +66,11 @@ class PermissionService extends BaseService
             }
         }
 
-        return $this->outputSuccess([], 'Batch post done');
     }
 
     public function getRoles()
     {
-        return $this->outputSuccess($this->role->get());
+        return responseOk($this->role->get());
     }
 
     public function postPermissionsViaRole(Request $request)
@@ -79,7 +79,7 @@ class PermissionService extends BaseService
         $current_permissions = $request->input('current_permissions');
         $role = Role::findById($role_id, Stuff::GUARD);
 
-        return $role->syncPermissions($current_permissions);
+        return responseOk($role->syncPermissions($current_permissions));
     }
 
     public function getPermissionsViaRole(Request $request)
@@ -87,7 +87,7 @@ class PermissionService extends BaseService
         $role_id = $request->input('id');
         /** @var Role $role */
         $role = Role::findById($role_id, Stuff::GUARD);
-        return $role->getAllPermissions();
+        return responseOk($role->getAllPermissions());
 
     }
 
@@ -100,13 +100,14 @@ class PermissionService extends BaseService
 
     public function postPermissions(Request $request)
     {
-        return $this->batchSync($this->permission, $request->all(), 'name');
+        $this->batchSync($this->permission, $request->all(), 'name');
+        return responseOk([], 'Batch post done');
     }
 
     public function getPermissions()
     {
         $permissins = $this->permission->get();
-        return $this->outputSuccess($permissins);
+        return responseOk($permissins);
     }
 
 
@@ -123,13 +124,13 @@ class PermissionService extends BaseService
         /** @var Stuff $stuff */
         $stuff = Stuff::findOrFail($request->input('id'));
 
-        return $stuff->roles;
+        return responseOk($stuff->roles);
     }
 
 
     public function getMenus()
     {
-        return $this->outputSuccess((new Menu)->getMenuTree());
+        return responseOk((new Menu)->getMenuTree());
     }
 
 

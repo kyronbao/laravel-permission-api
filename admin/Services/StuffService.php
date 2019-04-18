@@ -30,7 +30,7 @@ class StuffService extends BaseService
         $guard = Auth::guard('admin');
 
         if ($guard->user()) {
-            return $this->outputError(Err::AUTH_LOGGED_IN);
+            return responseError(Err::AUTH_LOGGED_IN);
         }
 
         if ($guard->validate()) {
@@ -40,7 +40,7 @@ class StuffService extends BaseService
             $stuff->admin_token = hash('sha256', $admin_token);
             $stuff->save();
 
-            return $this->outputSuccess($stuff, 'Login done')
+            return responseOk($stuff, 'Login done')
                 ->withCookie($this->generateCookie($admin_token, self::TOKEN_EXPIRE));
         }
         return $this->register($params);
@@ -58,7 +58,7 @@ class StuffService extends BaseService
         $stuff->fill($params);
         $stuff->save();
 
-        return $this->outputSuccess($stuff, 'Register done')
+        return responseOk($stuff, 'Register done')
             ->withCookie($this->generateCookie($admin_token, self::TOKEN_EXPIRE));
     }
 
@@ -69,14 +69,14 @@ class StuffService extends BaseService
 
         $guard->logout();
 
-        return $this->outputSuccess([], 'Logout done')
+        return responseOk([], 'Logout done')
             ->cookie($this->generateCookie('', 0));
     }
 
     public function getStuff()
     {
         if ($stuff = Auth::Guard('admin')->user()) {
-            return $this->outputSuccess($stuff);
+            return responseOk($stuff);
         }
     }
 
