@@ -29,7 +29,7 @@ class UserService extends BaseService
         $guard = Auth::guard('api');
 
         if ($guard->user()) {
-            return $this->outputError(Err::AUTH_LOGGED_IN);
+            return responseError(Err::AUTH_LOGGED_IN);
         }
 
         $api_token = Str::random(self::TOKEN_LENGTH);
@@ -39,11 +39,11 @@ class UserService extends BaseService
             $model->api_token = $api_token;
             $model->save();
 
-            return $this->outputSuccess($model, 'Login done')
+            return responseOk($model, 'Login done')
                 ->withCookie($this->generateCookie($api_token, self::TOKEN_EXPIRE));
         }
 
-        return $this->outputError(Err::AUTH_UNAUTHORIZED);
+        return responseError(Err::AUTH_UNAUTHORIZED);
     }
 
     private function generateCookie($cookie_value, $expire)
@@ -57,12 +57,12 @@ class UserService extends BaseService
         $guard = Auth::guard('api');
 
         if ($guard->guest()) {
-            return $this->outputError(Err::AUTH_NOT_LOGGED);
+            return responseError(Err::AUTH_NOT_LOGGED);
         }
 
         $guard->logout();
 
-        return $this->outputSuccess([], 'Logout done')
+        return responseOk([], 'Logout done')
             ->cookie($this->generateCookie('', 0));
     }
 
