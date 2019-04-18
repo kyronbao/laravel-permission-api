@@ -45,6 +45,15 @@ class Stuff extends Model implements AuthenticatableContract
     ];
 
     /**
+     * @param $username
+     * @return mixed \Admin\Models\Stuff
+     */
+    public static function findByUsername($username): self
+    {
+        return static::where(['username' => $username])->first();
+    }
+
+    /**
      * Fetch user by Credentials
      *
      * @param array $credentials
