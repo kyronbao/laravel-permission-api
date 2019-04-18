@@ -8,6 +8,7 @@
 
 namespace Admin\Services;
 
+use Admin\Models\Menu;
 use Admin\Models\Stuff;
 use App\Traits\StaticServer;
 use Illuminate\Support\Arr;
@@ -23,12 +24,14 @@ class PermissionService
     public $role;
     public $permission;
     public $stuff;
+    public $menu;
 
     public function __construct()
     {
         $this->role = new Role(['guard_name' => 'admin']);
         $this->permission = new Permission(['guard_name' => 'admin']);
         $this->stuff = new Stuff();
+        $this->menu = new Menu();
     }
 
     /**

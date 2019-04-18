@@ -20,6 +20,9 @@ Route::prefix('auth')->group(function () {
         Route::post('post-permissions', PermissionController::class . '@postPermissions');
         Route::get('get-permissions', PermissionController::class . '@getPermissions');
 
+        Route::post('post-menus', PermissionController::class . '@postMenus');
+        Route::get('get-menus', PermissionController::class . '@getMenus');
+
         Route::get('get-stuffs', PermissionController::class . '@getStuffs');
         Route::post('delete-stuff', PermissionController::class . '@deleteStuff');
         Route::post('post-roles-via-user', PermissionController::class . '@postRolesViaUser');

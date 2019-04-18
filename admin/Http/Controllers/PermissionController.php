@@ -80,6 +80,21 @@ class PermissionController
         return responseOk((new Menu)->getMenuTree());
     }
 
+    public function getMenus()
+    {
+        return responseOk($this->service->menu->getMenuTree());
+    }
+
+    public function postMenus(Request $request)
+    {
+        $this->service->batchSync(
+            $this->service->menu,
+            $request->all(),
+            'name'
+        );
+        return responseOk([], 'Batch post done');
+    }
+
 
     public function getStuffs()
     {

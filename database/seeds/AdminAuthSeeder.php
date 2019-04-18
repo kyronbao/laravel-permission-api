@@ -1,5 +1,6 @@
 <?php
 
+use Admin\Models\Menu;
 use Admin\Models\Stuff;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -35,6 +36,38 @@ class AdminAuthSeeder extends Seeder
         }
 
         $permissions = [[
+
+            'id' => 1,
+            'name' => 'get stuffs',
+            'name_cn' => '获取员工',
+            'path' => 'admin/get-stuffs',
+            'guard_name' => Stuff::GUARD,
+
+        ], [
+            'id' => 2,
+            'name' => 'get roles',
+            'name_cn' => '获取角色',
+            'path' => 'admin/get-roles',
+            'guard_name' => Stuff::GUARD,
+        ], [
+            'id' => 3,
+            'name' => 'get permissions',
+            'name_cn' => '获取权限',
+            'path' => 'admin/get-permissions',
+            'guard_name' => Stuff::GUARD,
+        ], [
+            'id' => 4,
+            'name' => 'get menus',
+            'name_cn' => '获取菜单',
+            'path' => 'admin/get-stuffs',
+            'guard_name' => Stuff::GUARD,
+        ]];
+
+        foreach ($permissions as $permission) {
+            Permission::create($permission);
+        }
+
+        $menus = [[
             'id' => 1,
             'name' => 'auth management',
             'name_cn' => '授权管理',
@@ -47,7 +80,7 @@ class AdminAuthSeeder extends Seeder
             'name' => 'stuffs management',
             'name_cn' => '员工管理',
             'parent' => 1,
-            'path' => 'admin/get-stuffs',
+            'path' => 'admin/stuffs',
             'guard_name' => Stuff::GUARD,
 
         ], [
@@ -55,19 +88,26 @@ class AdminAuthSeeder extends Seeder
             'name' => 'roles management',
             'name_cn' => '角色管理',
             'parent' => 1,
-            'path' => 'admin/get-roles',
+            'path' => 'admin/roles',
             'guard_name' => Stuff::GUARD,
         ], [
             'id' => 4,
             'name' => 'permissions management',
             'name_cn' => '权限管理',
             'parent' => 1,
-            'path' => 'admin/get-permissions',
+            'path' => 'admin/permissions',
+            'guard_name' => Stuff::GUARD,
+        ], [
+            'id' => 5,
+            'name' => 'menus management',
+            'name_cn' => '菜单管理',
+            'parent' => 1,
+            'path' => 'admin/menus',
             'guard_name' => Stuff::GUARD,
         ]];
 
-        foreach ($permissions as $permission) {
-            Permission::create($permission);
+        foreach ($menus as $menu) {
+            Menu::create($menu);
         }
 
         $admin = Stuff::findByUsername('admin');

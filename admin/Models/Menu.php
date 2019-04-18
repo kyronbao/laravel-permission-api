@@ -9,13 +9,14 @@
 namespace Admin\Models;
 
 use App\Helpers\ArrHelper;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Permission;
 
 
-class Menu extends Permission
+class Menu extends Model
 {
-    const IS_MENU = 1;
+
+    protected $guarded = [];
 
     public function getMenuRows()
     {
