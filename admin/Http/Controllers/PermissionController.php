@@ -81,6 +81,17 @@ class PermissionController
     }
 
 
+    public function getStuffs()
+    {
+        return responseOk($this->service->stuff->get());
+    }
+
+    public function deleteStuff(Request $request)
+    {
+        $id = $request->input('id');
+        return responseOk($this->service->stuff->findOrFail($id)->forceDelete());
+    }
+
     public function postRolesViaUser(Request $request)
     {
         $stuff = Stuff::find($request->input('stuff_id'));

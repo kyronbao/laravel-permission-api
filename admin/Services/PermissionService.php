@@ -8,6 +8,7 @@
 
 namespace Admin\Services;
 
+use Admin\Models\Stuff;
 use App\Traits\StaticServer;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -21,11 +22,13 @@ class PermissionService
 
     public $role;
     public $permission;
+    public $stuff;
 
     public function __construct()
     {
         $this->role = new Role(['guard_name' => 'admin']);
         $this->permission = new Permission(['guard_name' => 'admin']);
+        $this->stuff = new Stuff();
     }
 
     /**
