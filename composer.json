@@ -38,6 +38,9 @@
             "Admin\\": "admin/",
             "Api\\": "api/"
         },
+        "files": [
+            "app/Helpers/helper.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"
