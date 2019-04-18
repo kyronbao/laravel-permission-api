@@ -74,9 +74,15 @@ class PermissionService extends BaseService
         return $this->outputSuccess($this->role->get());
     }
 
-    public function postRoutes(Request $request)
+    public function postPermissions(Request $request)
     {
         return $this->batchSync($this->permission, $request->all(), 'name');
+    }
+
+    public function getPermissions()
+    {
+        $permissins = $this->permission->get();
+        return $this->outputSuccess($permissins);
     }
 
     public function getMenus()
@@ -100,21 +106,15 @@ class PermissionService extends BaseService
         return $stuff->roles;
     }
 
-    public function postRoutesViaRole(Request $request)
+    public function postPermissionsViaRole(Request $request)
     {
-        $role_name = $request->input('role');
-        $routes = $request->input('routes');
-        $role = Role::findByName($role_name, Stuff::GUARD);
+        $role_id = $request->input('id');
+        $current_permissions = $request->input('current_permissions');
+        $role = Role::findById($role_id, Stuff::GUARD);
 
-        return $role->syncPermissions($routes);
+        return $role->syncPermissions($current_permissions);
     }
 
-
-    public function getAuthRoutes()
-    {
-        $stuff = Auth::guard('admin')->user();
-        return $stuff->getAllPermissions()->pluck('path')->toArray();
-    }
 
     public function getPermissionsViaRole(Request $request)
     {
@@ -124,5 +124,13 @@ class PermissionService extends BaseService
         return $role->getAllPermissions();
 
     }
+
+
+    public function getAuthRoutes()
+    {
+        $stuff = Auth::guard('admin')->user();
+        return $stuff->getAllPermissions()->pluck('path')->toArray();
+    }
+
 
 }

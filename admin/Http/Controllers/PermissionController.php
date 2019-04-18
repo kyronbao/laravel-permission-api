@@ -24,9 +24,24 @@ class PermissionController
         return PermissionService::server()->getRoles();
     }
 
-    public function postRoutes(Request $request)
+    public function postPermissions(Request $request)
     {
-        return PermissionService::server()->postRoutes($request);
+        return PermissionService::server()->postPermissions($request);
+    }
+
+    public function getPermissions()
+    {
+        return PermissionService::server()->getPermissions();
+    }
+
+    public function postPermissionsViaRole(Request $request)
+    {
+        return PermissionService::server()->postPermissionsViaRole($request);
+    }
+
+    public function getPermissionsViaRole(Request $request)
+    {
+        return PermissionService::server()->getPermissionsViaRole($request);
     }
 
     public function getMenus()
@@ -42,16 +57,6 @@ class PermissionController
     public function getRolesViaUser(Request $request)
     {
         return PermissionService::server()->getRolesViaUser($request);
-    }
-
-    public function postRoutesViaRole(Request $request)
-    {
-        return PermissionService::server()->postRoutesViaRole($request);
-    }
-
-    public function getPermissionsViaRole(Request $request)
-    {
-        return PermissionService::server()->getPermissionsViaRole($request);
     }
 
 }
