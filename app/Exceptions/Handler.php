@@ -65,7 +65,7 @@ class Handler extends ExceptionHandler
             if (config('app.env') === Env::PROD) {
                 return response(Err::DATA_NOT_FOUND);
             }
-            return response(['code' => Err::DATA_NOT_FOUND['code'], 'msg' => $e->getMessage()]);
+            return response(['code' => Err::DATA_NOT_FOUND['code'], 'msg' => $e->getMessage() ?: "Not found"]);
         }
 
         return $this->prepareJsonResponse($request, $e);
