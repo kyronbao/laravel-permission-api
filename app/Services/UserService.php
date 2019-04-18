@@ -11,12 +11,14 @@ namespace App\Services;
 
 use App\Exceptions\Err;
 use App\Guards\CustomTokenGuard;
+use App\Traits\StaticServer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class UserService extends BaseService
+class UserService
 {
+    use StaticServer;
 
     const TOKEN_LENGTH = 60;
     const TOKEN_NAME = 'api_token';

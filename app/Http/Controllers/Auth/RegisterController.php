@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Services\BaseService;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -70,6 +69,6 @@ class RegisterController extends Controller
 
         $user = $this->create($request->all());
 
-        return BaseService::server()->outputSuccess($user);
+        return responseOk($user);
     }
 }

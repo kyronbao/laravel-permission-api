@@ -8,7 +8,6 @@
 
 namespace Api\Controllers;
 
-use App\Services\BaseService;
 use Illuminate\Support\Facades\Auth;
 
 class UserController
@@ -17,6 +16,6 @@ class UserController
     public function getUser()
     {
         $user = Auth::guard('api')->user();
-        return BaseService::server()->outputSuccess($user);
+        return responseOk($user);
     }
 }

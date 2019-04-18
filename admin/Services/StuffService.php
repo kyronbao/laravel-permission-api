@@ -11,14 +11,16 @@ namespace Admin\Services;
 use Admin\Models\Stuff;
 use App\Exceptions\Err;
 use App\Guards\CookieGuard;
-use App\Services\BaseService;
+use App\Traits\StaticServer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class StuffService extends BaseService
+class StuffService
 {
+
+    use StaticServer;
 
     public $stuff;
     const TOKEN_LENGTH = 8;
