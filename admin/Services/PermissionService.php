@@ -52,7 +52,6 @@ class PermissionService extends BaseService
 
         $model->whereIn($index, Arr::pluck($delete, $index))->delete();
 
-
         foreach ($params as $item) {
             if (in_array($item[$index], $olds_value)) {
 
@@ -74,6 +73,31 @@ class PermissionService extends BaseService
         return $this->outputSuccess($this->role->get());
     }
 
+    public function postPermissionsViaRole(Request $request)
+    {
+        $role_id = $request->input('id');
+        $current_permissions = $request->input('current_permissions');
+        $role = Role::findById($role_id, Stuff::GUARD);
+
+        return $role->syncPermissions($current_permissions);
+    }
+
+    public function getPermissionsViaRole(Request $request)
+    {
+        $role_id = $request->input('id');
+        /** @var Role $role */
+        $role = Role::findById($role_id, Stuff::GUARD);
+        return $role->getAllPermissions();
+
+    }
+
+    public function getAuthRoutes()
+    {
+        $stuff = Auth::guard('admin')->user();
+        return $stuff->getAllPermissions()->pluck('path')->toArray();
+    }
+
+
     public function postPermissions(Request $request)
     {
         return $this->batchSync($this->permission, $request->all(), 'name');
@@ -85,10 +109,6 @@ class PermissionService extends BaseService
         return $this->outputSuccess($permissins);
     }
 
-    public function getMenus()
-    {
-        return $this->outputSuccess((new Menu)->getMenuTree());
-    }
 
     public function postRolesViaUser(Request $request)
     {
@@ -106,30 +126,10 @@ class PermissionService extends BaseService
         return $stuff->roles;
     }
 
-    public function postPermissionsViaRole(Request $request)
+
+    public function getMenus()
     {
-        $role_id = $request->input('id');
-        $current_permissions = $request->input('current_permissions');
-        $role = Role::findById($role_id, Stuff::GUARD);
-
-        return $role->syncPermissions($current_permissions);
-    }
-
-
-    public function getPermissionsViaRole(Request $request)
-    {
-        $role_id = $request->input('id');
-        /** @var Role $role */
-        $role = Role::findById($role_id, Stuff::GUARD);
-        return $role->getAllPermissions();
-
-    }
-
-
-    public function getAuthRoutes()
-    {
-        $stuff = Auth::guard('admin')->user();
-        return $stuff->getAllPermissions()->pluck('path')->toArray();
+        return $this->outputSuccess((new Menu)->getMenuTree());
     }
 
 
