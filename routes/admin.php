@@ -7,7 +7,7 @@ use Admin\Http\Controllers\StuffController;
 
 Route::prefix('auth')->group(function () {
 
-    Route::get('get-menus', PermissionController::class . '@getMenus');
+    Route::get('menu', PermissionController::class . '@getMenu');
     Route::get('stuff', StuffController::class . '@getStuff');
     Route::post('logout', StuffController::class . '@logout');
 

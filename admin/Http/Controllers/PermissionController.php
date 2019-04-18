@@ -75,7 +75,7 @@ class PermissionController
     }
 
 
-    public function getMenus()
+    public function getMenu()
     {
         return responseOk((new Menu)->getMenuTree());
     }
