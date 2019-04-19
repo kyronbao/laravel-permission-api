@@ -2,10 +2,10 @@
 
 use Admin\Models\Menu;
 use Admin\Models\Stuff;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class AdminAuthSeeder extends Seeder
 {
@@ -36,7 +36,6 @@ class AdminAuthSeeder extends Seeder
         }
 
         $permissions = [[
-
             'id' => 1,
             'name' => 'get stuffs',
             'name_cn' => '获取员工',
@@ -73,37 +72,30 @@ class AdminAuthSeeder extends Seeder
             'name_cn' => '授权管理',
             'parent' => 0,
             'path' => '',
-            'guard_name' => Stuff::GUARD,
-
         ], [
             'id' => 2,
             'name' => 'stuffs management',
             'name_cn' => '员工管理',
             'parent' => 1,
             'path' => 'admin/stuffs',
-            'guard_name' => Stuff::GUARD,
-
         ], [
             'id' => 3,
             'name' => 'roles management',
             'name_cn' => '角色管理',
             'parent' => 1,
             'path' => 'admin/roles',
-            'guard_name' => Stuff::GUARD,
         ], [
             'id' => 4,
             'name' => 'permissions management',
             'name_cn' => '权限管理',
             'parent' => 1,
             'path' => 'admin/permissions',
-            'guard_name' => Stuff::GUARD,
         ], [
             'id' => 5,
             'name' => 'menus management',
             'name_cn' => '菜单管理',
             'parent' => 1,
             'path' => 'admin/menus',
-            'guard_name' => Stuff::GUARD,
         ]];
 
         foreach ($menus as $menu) {
@@ -116,11 +108,13 @@ class AdminAuthSeeder extends Seeder
         $user = Stuff::findByUsername('user');
         $user->syncRoles(['coder']);
 
+        /** @var Role $coder */
         $coder = Role::findByName('coder', Stuff::GUARD);
         $coder->syncPermissions([
-            'auth management',
-            'stuffs management',
+            'get stuffs',
+            'get roles',
         ]);
+        $coder->syncMenus([1, 2, 3]);
 
 
     }

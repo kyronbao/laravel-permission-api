@@ -12,8 +12,8 @@ namespace Admin\Http\Controllers;
 use Admin\Models\Menu;
 use Admin\Models\Stuff;
 use Admin\Services\PermissionService;
+use App\Models\Role;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
 class PermissionController
 {
@@ -56,6 +56,25 @@ class PermissionController
         /** @var Role $role */
         $role = Role::findById($role_id, Stuff::GUARD);
         return responseOk($role->getAllPermissions());
+    }
+
+
+    public function postMenusViaRole(Request $request)
+    {
+        $role_id = $request->input('id');
+        $current_menus = $request->input('current_menus');
+        /** @var Role $role */
+        $role = Role::findById($role_id, Stuff::GUARD);
+
+        return responseOk($role->syncMenus($current_menus));
+    }
+
+    public function getMenusViaRole(Request $request)
+    {
+        $role_id = $request->input('id');
+        /** @var Role $role */
+        $role = Role::findById($role_id, Stuff::GUARD);
+        return responseOk($role->getMenusViaRole());
     }
 
 
