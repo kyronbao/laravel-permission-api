@@ -16,14 +16,17 @@ class StuffController
 {
     public function login(Request $request)
     {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
         $params = $request->only('username', 'password');
         return StuffService::server()->login($params);
     }
 
-    public function getStuff(Request $request)
+    public function getStuff()
     {
-
-        return StuffService::server()->getStuff($request);
+        return StuffService::server()->getStuff();
     }
 
     public function logout()

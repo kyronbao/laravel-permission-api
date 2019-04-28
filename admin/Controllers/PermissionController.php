@@ -14,6 +14,7 @@ use Admin\Models\Stuff;
 use Admin\Services\PermissionService;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController
 {
@@ -26,9 +27,14 @@ class PermissionController
 
     public function postRoles(Request $request)
     {
+        $request->validate([
+            'data' => 'required|array',
+            'data.*.name' => 'required|string',
+            'data.*.guard_name' => 'required|string',
+        ]);
         $this->service->batchSync(
             $this->service->role,
-            $request->all(),
+            $request->input('data'),
             'name'
         );
         return responseOk([], 'Batch post done');
@@ -42,6 +48,10 @@ class PermissionController
 
     public function postPermissionsViaRole(Request $request)
     {
+        $request->validate([
+            'id' => 'required|integer',
+            'current_permissions' => 'required|array',
+        ]);
         $role_id = $request->input('id');
         $current_permissions = $request->input('current_permissions');
         $role = Role::findById($role_id, Stuff::GUARD);
@@ -52,15 +62,26 @@ class PermissionController
 
     public function getPermissionsViaRole(Request $request)
     {
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
         $role_id = $request->input('id');
         /** @var Role $role */
         $role = Role::findById($role_id, Stuff::GUARD);
+        if ($role->isSuperAdmin()) {
+            return responseOk(Permission::all());
+        }
         return responseOk($role->getAllPermissions());
     }
 
 
     public function postMenusViaRole(Request $request)
     {
+        $request->validate([
+            'id' => 'required|integer',
+            'current_menus' => 'required|array',
+        ]);
+
         $role_id = $request->input('id');
         $current_menus = $request->input('current_menus');
         /** @var Role $role */
@@ -71,6 +92,10 @@ class PermissionController
 
     public function getMenusViaRole(Request $request)
     {
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
+
         $role_id = $request->input('id');
         /** @var Role $role */
         $role = Role::findById($role_id, Stuff::GUARD);
@@ -80,9 +105,16 @@ class PermissionController
 
     public function postPermissions(Request $request)
     {
+        $request->validate([
+            'data' => 'required|array',
+            'data.*.name' => 'required|string',
+            'data.*.name_cn' => 'required|string',
+            'data.*.guard_name' => 'required|string',
+            'data.*.path' => 'required|string',
+        ]);
         $this->service->batchSync(
             $this->service->permission,
-            $request->all(),
+            $request->input('data'),
             'name'
         );
         return responseOk([], 'Batch post done');
@@ -106,9 +138,15 @@ class PermissionController
 
     public function postMenus(Request $request)
     {
+        $request->validate([
+            'data' => 'required|array',
+            'data.*.name' => 'required|string',
+            'data.*.name_cn' => 'required|string',
+            'data.*.parent' => 'required|integer',
+        ]);
         $this->service->batchSync(
             $this->service->menu,
-            $request->all(),
+            $request->input('data'),
             'name'
         );
         return responseOk([], 'Batch post done');
@@ -122,13 +160,22 @@ class PermissionController
 
     public function deleteStuff(Request $request)
     {
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
+
         $id = $request->input('id');
         return responseOk($this->service->stuff->findOrFail($id)->forceDelete());
     }
 
     public function postRolesViaUser(Request $request)
     {
-        $stuff = Stuff::find($request->input('stuff_id'));
+        $request->validate([
+            'id' => 'required|integer',
+            'roles' => 'required|array',
+        ]);
+
+        $stuff = Stuff::findOrFail($request->input('id'));
         $roles = $request->input('roles');
 
         return responseOk($stuff->syncRoles($roles));
@@ -136,6 +183,10 @@ class PermissionController
 
     public function getRolesViaUser(Request $request)
     {
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
+
         /** @var Stuff $stuff */
         $stuff = Stuff::findOrFail($request->input('id'));
 
