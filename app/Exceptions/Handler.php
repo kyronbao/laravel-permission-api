@@ -54,18 +54,19 @@ class Handler extends ExceptionHandler
         $e = $this->prepareException($e);
 
         if ($e instanceof ValidationException) {
-            return response(['code' => Err::VALIDATE_CODE, 'msg' => $e->errors()]);
+            return responseError(['code' => Err::VALIDATE_CODE, 'msg' => $e->errors()]);
         } elseif ($e instanceof AuthenticationException) {
-            return response(Err::AUTH_NOT_LOGGED);
+            return responseError(Err::AUTH_NOT_LOGGED);
         } elseif ($e instanceof AuthAdminRouteException) {
-            return response(Err::AUTH_FORBIDDEN);
+            return responseError(Err::AUTH_FORBIDDEN);
         }
 
         if ($e instanceof NotFoundHttpException) {
             if (config('app.env') === Env::PROD) {
-                return response(Err::DATA_NOT_FOUND);
+                return responseError(Err::DATA_NOT_FOUND);
             }
-            return response(['code' => Err::DATA_NOT_FOUND['code'], 'msg' => $e->getMessage() ?: "Not found"]);
+            return responseError(['code' => Err::DATA_NOT_FOUND['code'],
+                'msg' => $e->getMessage() ?: [NotFoundHttpException::class, $e->getFile()]]);
         }
 
         return $this->prepareJsonResponse($request, $e);
