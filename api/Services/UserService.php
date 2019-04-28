@@ -6,7 +6,7 @@
  * Time: 下午3:50
  */
 
-namespace App\Services;
+namespace Api\Services;
 
 
 use App\Exceptions\Err;

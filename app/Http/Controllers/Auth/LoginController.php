@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Api\Services\UserService;
 use App\Http\Controllers\Controller;
-use App\Services\UserService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
