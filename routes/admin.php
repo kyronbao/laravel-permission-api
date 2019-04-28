@@ -1,8 +1,8 @@
 <?php
 
 
-use Admin\Http\Controllers\PermissionController;
-use Admin\Http\Controllers\StuffController;
+use Admin\Controllers\PermissionController;
+use Admin\Controllers\StuffController;
 
 
 Route::prefix('auth')->group(function () {

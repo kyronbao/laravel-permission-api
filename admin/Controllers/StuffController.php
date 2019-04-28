@@ -6,7 +6,7 @@
  * Time: 上午3:00
  */
 
-namespace Admin\Http\Controllers;
+namespace Admin\Controllers;
 
 
 use Admin\Services\StuffService;
