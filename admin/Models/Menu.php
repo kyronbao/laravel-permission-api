@@ -29,8 +29,8 @@ class Menu extends Model
 
         $role = $stuff->roles->pluck('id');
 
-        if (empty($role)) {
-            return [];
+        if (!isset($role[0])) {
+            return new \stdClass;
         }
 
         // 暂时只支持一个用户一个角色
