@@ -9,6 +9,7 @@
 namespace Admin\Models;
 
 use App\Helpers\ArrHelper;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,16 @@ class Menu extends Model
         if ($stuff->hasRole('super-admin')) {
             return $this->get();
         }
-        return $stuff->getAllPermissions();
+
+        $role = $stuff->roles->pluck('id');
+
+        if (empty($role)) {
+            return [];
+        }
+
+        // 暂时只支持一个用户一个角色
+        return Role::findById($role[0])->menus;
+
     }
 
     public function getMenuTree()
