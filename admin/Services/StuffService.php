@@ -32,7 +32,7 @@ class StuffService
         $guard = Auth::guard('admin');
 
         if ($guard->user()) {
-            return responseError(Err::AUTH_LOGGED_IN);
+            return responseOk($guard->user(), 'Has logged in');
         }
 
         if ($guard->validate()) {
@@ -45,7 +45,8 @@ class StuffService
             return responseOk($stuff, 'Login done')
                 ->withCookie($this->generateCookie($admin_token, self::TOKEN_EXPIRE));
         }
-        return $this->register($params);
+
+        return responseError(Err::AUTH_UNAUTHORIZED);
     }
 
     public function register($params)

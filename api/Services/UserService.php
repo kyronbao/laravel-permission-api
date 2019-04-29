@@ -31,7 +31,7 @@ class UserService
         $guard = Auth::guard('api');
 
         if ($guard->user()) {
-            return responseError(Err::AUTH_LOGGED_IN);
+            return responseOk($guard->user(), 'Has logged in');
         }
 
         $api_token = Str::random(self::TOKEN_LENGTH);
