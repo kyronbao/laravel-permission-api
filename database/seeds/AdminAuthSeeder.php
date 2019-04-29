@@ -39,26 +39,26 @@ class AdminAuthSeeder extends Seeder
             'id' => 1,
             'name' => 'get stuffs',
             'name_cn' => '获取员工',
-            'path' => 'admin/get-stuffs',
+            'path' => 'admin/auth/get-stuffs',
             'guard_name' => Stuff::GUARD,
 
         ], [
             'id' => 2,
             'name' => 'get roles',
             'name_cn' => '获取角色',
-            'path' => 'admin/get-roles',
+            'path' => 'admin/auth/get-roles',
             'guard_name' => Stuff::GUARD,
         ], [
             'id' => 3,
             'name' => 'get permissions',
             'name_cn' => '获取权限',
-            'path' => 'admin/get-permissions',
+            'path' => 'admin/auth/get-permissions',
             'guard_name' => Stuff::GUARD,
         ], [
             'id' => 4,
             'name' => 'get menus',
             'name_cn' => '获取菜单',
-            'path' => 'admin/get-stuffs',
+            'path' => 'admin/auth/get-stuffs',
             'guard_name' => Stuff::GUARD,
         ]];
 
@@ -71,31 +71,31 @@ class AdminAuthSeeder extends Seeder
             'name' => 'auth management',
             'name_cn' => '授权管理',
             'parent' => 0,
-            'path' => '',
+            'path' => '/',
         ], [
             'id' => 2,
             'name' => 'stuffs management',
             'name_cn' => '员工管理',
             'parent' => 1,
-            'path' => 'admin/stuffs',
+            'path' => 'auth/stuffs',
         ], [
             'id' => 3,
             'name' => 'roles management',
             'name_cn' => '角色管理',
             'parent' => 1,
-            'path' => 'admin/roles',
+            'path' => 'auth/roles',
         ], [
             'id' => 4,
             'name' => 'permissions management',
             'name_cn' => '权限管理',
             'parent' => 1,
-            'path' => 'admin/permissions',
+            'path' => 'auth/permissions',
         ], [
             'id' => 5,
             'name' => 'menus management',
             'name_cn' => '菜单管理',
             'parent' => 1,
-            'path' => 'admin/menus',
+            'path' => 'auth/menus',
         ]];
 
         foreach ($menus as $menu) {
