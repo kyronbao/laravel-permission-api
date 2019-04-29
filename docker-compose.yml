@@ -1,0 +1,58 @@
+version: '3'
+services:
+
+  db:
+    image: mysql:5.7.25
+    container_name: db-lservices
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=lservices
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - db_data:/var/lib/mysql/
+      - .docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      lservices_network:
+        ipv4_address: 172.29.0.2
+
+  app:
+    build: .docker/php-fpm
+    image: app-laravel:0.1.0
+    container_name: app-lservices
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www
+      - .php-fpm/php/php.ini:/usr/local/etc/php/php.ini
+    networks:
+      lservices_network:
+        ipv4_address: 172.29.0.3
+
+  web:
+    image: nginx:1.14.2-alpine
+    container_name: web-lservices
+    ports:
+      - "8000:8000"
+    depends_on:
+      - app
+    volumes:
+      - ./:/var/www/
+      - .docker/nginx/:/etc/nginx/
+    networks:
+      lservices_network:
+        ipv4_address: 172.29.0.4
+
+#Volumes
+volumes:
+  db_data:
+    driver: local
+
+#Docker Networks
+networks:
+  lservices_network:
+    driver: bridge
+    ipam: ## Set network
+      driver: default
+      config:
+        - subnet: 172.29.0.0/24
