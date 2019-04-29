@@ -10,11 +10,11 @@ namespace Admin\Services;
 
 use Admin\Models\Menu;
 use Admin\Models\Stuff;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Traits\StaticServer;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class PermissionService
 {
@@ -64,7 +64,9 @@ class PermissionService
 
                 $update_model = $model->where($index, $item[$index])->first();
                 foreach ($item as $key => $value) {
-                    $update_model->$key = $value;
+                    if (in_array($key, $model->getFillable())) {
+                        $update_model->$key = $value;
+                    }
                 }
                 $update_model->update();
             } else {

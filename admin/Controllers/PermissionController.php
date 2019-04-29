@@ -9,7 +9,6 @@
 namespace Admin\Controllers;
 
 
-use Admin\Models\Menu;
 use Admin\Models\Stuff;
 use Admin\Services\PermissionService;
 use App\Models\Role;
@@ -32,6 +31,7 @@ class PermissionController
             'data.*.name' => 'required|string',
             'data.*.guard_name' => 'required|string',
         ]);
+
         $this->service->batchSync(
             $this->service->role,
             $request->input('data'),
@@ -128,12 +128,12 @@ class PermissionController
 
     public function getMenu()
     {
-        return responseOk((new Menu)->getMenuTree());
+        return responseOk($this->service->menu->getMenuTree());
     }
 
     public function getMenus()
     {
-        return responseOk($this->service->menu->getMenuTree());
+        return responseOk($this->service->menu->get());
     }
 
     public function postMenus(Request $request)

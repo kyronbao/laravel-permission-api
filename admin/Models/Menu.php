@@ -17,7 +17,13 @@ use Illuminate\Support\Facades\Auth;
 class Menu extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'name_cn',
+        'path',
+        'icon',
+        'parent',
+    ];
 
     public function getMenuRows()
     {

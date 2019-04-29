@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Role extends \Spatie\Permission\Models\Role
 {
 
+    protected $fillable = ['name', 'guard_name'];
+
+
     public function syncMenus($current_menus)
     {
         return $this->menus()->sync($current_menus);
