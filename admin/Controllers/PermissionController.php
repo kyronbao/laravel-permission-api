@@ -168,20 +168,20 @@ class PermissionController
         return responseOk($this->service->stuff->findOrFail($id)->forceDelete());
     }
 
-    public function postRolesViaUser(Request $request)
+    public function postRolesViaStuff(Request $request)
     {
         $request->validate([
             'id' => 'required|integer',
-            'roles' => 'required|array',
+            'current_roles' => 'required|array',
         ]);
 
         $stuff = Stuff::findOrFail($request->input('id'));
-        $roles = $request->input('roles');
+        $roles = $request->input('current_roles');
 
         return responseOk($stuff->syncRoles($roles));
     }
 
-    public function getRolesViaUser(Request $request)
+    public function getRolesViaStuff(Request $request)
     {
         $request->validate([
             'id' => 'required|integer',

@@ -27,8 +27,8 @@ Route::prefix('auth')->group(function () {
 
         Route::get('get-stuffs', PermissionController::class . '@getStuffs');
         Route::post('delete-stuff', PermissionController::class . '@deleteStuff');
-        Route::post('post-roles-via-user', PermissionController::class . '@postRolesViaUser');
-        Route::get('get-roles-via-user', PermissionController::class . '@getRolesViaUser');
+        Route::post('post-roles-via-stuff', PermissionController::class . '@postRolesViaStuff');
+        Route::get('get-roles-via-stuff', PermissionController::class . '@getRolesViaStuff');
 
     });
 });
