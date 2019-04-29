@@ -5,7 +5,7 @@ services:
     image: mysql:5.7.25
     container_name: db-lservices
     ports:
-      - "3306:3306"
+      - "33060:3306"
     environment:
       - MYSQL_DATABASE=lservices
       - MYSQL_ROOT_PASSWORD=secret
@@ -14,7 +14,6 @@ services:
       - .docker/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       lservices_network:
-        ipv4_address: 172.29.0.2
 
   app:
     build: .docker/php-fpm
@@ -27,13 +26,12 @@ services:
       - .php-fpm/php/php.ini:/usr/local/etc/php/php.ini
     networks:
       lservices_network:
-        ipv4_address: 172.29.0.3
 
   web:
     image: nginx:1.14.2-alpine
     container_name: web-lservices
     ports:
-      - "8000:8000"
+      - "8080:8080"
     depends_on:
       - app
     volumes:
@@ -41,7 +39,6 @@ services:
       - .docker/nginx/:/etc/nginx/
     networks:
       lservices_network:
-        ipv4_address: 172.29.0.4
 
 #Volumes
 volumes:
@@ -52,7 +49,3 @@ volumes:
 networks:
   lservices_network:
     driver: bridge
-    ipam: ## Set network
-      driver: default
-      config:
-        - subnet: 172.29.0.0/24
