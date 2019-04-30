@@ -1,11 +1,11 @@
 version: '3'
 services:
 
-  db:
+  db-lservices:
     image: mysql:5.7.25
     container_name: db-lservices
     ports:
-      - "33060:3306"
+      - "3307:3306"
     environment:
       - MYSQL_DATABASE=lservices
       - MYSQL_ROOT_PASSWORD=secret
@@ -15,25 +15,25 @@ services:
     networks:
       lservices_network:
 
-  app:
+  app-lservices:
     build: .docker/php-fpm
     image: app-laravel:0.1.0
     container_name: app-lservices
     depends_on:
-      - db
+      - db-lservices
     volumes:
       - ./:/var/www
       - .php-fpm/php/php.ini:/usr/local/etc/php/php.ini
     networks:
       lservices_network:
 
-  web:
+  web-lservices:
     image: nginx:1.14.2-alpine
     container_name: web-lservices
     ports:
       - "8080:8080"
     depends_on:
-      - app
+      - app-lservices
     volumes:
       - ./:/var/www/
       - .docker/nginx/:/etc/nginx/
