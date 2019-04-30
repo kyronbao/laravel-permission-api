@@ -43,9 +43,9 @@ class PermissionService
      */
     public function batchSync($model, $params, $index)
     {
-        $keys = array_keys($params[0]);
         $params_value = Arr::pluck($params, $index);
 
+        $keys = $model->getFillable();
         $olds = $model->get($keys)->toArray();
         $olds_value = Arr::pluck($olds, $index);
 
@@ -64,7 +64,7 @@ class PermissionService
 
                 $update_model = $model->where($index, $item[$index])->first();
                 foreach ($item as $key => $value) {
-                    if (in_array($key, $model->getFillable())) {
+                    if (in_array($key, $keys)) {
                         $update_model->$key = $value;
                     }
                 }
