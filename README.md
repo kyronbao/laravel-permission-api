@@ -2,7 +2,7 @@ English | [简体中文](./README.zh-CN.md)
 
 # Laravel Permission API
 
-RBAC permission and multiple auth API base on [spatie/laravel-permission](https://github.com/spatie/laravel-permission), It can cooperate with the front end (such as [Ant Design Pro](https://github.com/ant-design/ant-design-pro)) to quickly build the authority management (RBAC), and the front and back login module.
+Laravel RBAC permission and multiple auth API base on [spatie/laravel-permission](https://github.com/spatie/laravel-permission), It can cooperate with the front end (such as [Ant Design Pro](https://github.com/ant-design/ant-design-pro)) to quickly build the authority management (RBAC), and the front and back login module.
 
 ## Feature
 

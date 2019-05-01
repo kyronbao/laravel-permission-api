@@ -1,6 +1,6 @@
 # Laravel Permission Api
 
-基于[spatie/laravel-permission](https://github.com/spatie/laravel-permission)开发的API应用，可以配合前端（如[Ant Design Pro](https://github.com/ant-design/ant-design-pro)）快速搭建后台管理系统的权限管理（RBAC），前后端登录模块
+基于[spatie/laravel-permission](https://github.com/spatie/laravel-permission)开发的Laravel API，可以配合前端（如[Ant Design Pro](https://github.com/ant-design/ant-design-pro)）快速搭建后台管理系统的权限管理（RBAC），前后端登录模块
 
 ## 功能
 
