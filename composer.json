@@ -1,10 +1,14 @@
 {
-    "name": "laravel/laravel",
+    "name": "kyronbao/laravel-permission-api",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "RBAC permission and multi auth API base on spatie/laravel-permission",
     "keywords": [
-        "framework",
-        "laravel"
+        "kyronbao",
+        "laravel",
+        "permission",
+        "rbac",
+        "auth",
+        "api"
     ],
     "license": "MIT",
     "require": {
