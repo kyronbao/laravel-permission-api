@@ -29,6 +29,7 @@ class PermissionController
         $request->validate([
             'data' => 'required|array',
             'data.*.name' => 'required|string',
+            'data.*.name_cn' => 'required|string',
             'data.*.guard_name' => 'required|string',
         ]);
 
