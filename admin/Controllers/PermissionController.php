@@ -51,7 +51,7 @@ class PermissionController
     {
         $request->validate([
             'id' => 'required|integer',
-            'current_permissions' => 'required|array',
+            'current_permissions' => 'array',
         ]);
         $role_id = $request->input('id');
         $current_permissions = $request->input('current_permissions');
