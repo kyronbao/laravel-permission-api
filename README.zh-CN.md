@@ -17,7 +17,11 @@
 ```
 php artisan migrate --seed
 ```
-
+## docker 安装
+```
+docker-compose up -d
+```
+如果您对docker-compose不太熟悉，可以参考下我的这个项目 [kyronbao/laravel-docker-compose](https://github.com/kyronbao/laravel-docker-compose)
 ## 文档
 - [https://documenter.getpostman.com/view/7190486/S1Lr5rht](https://documenter.getpostman.com/view/7190486/S1Lr5rht)
 

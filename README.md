@@ -19,7 +19,11 @@ make test data
 ```
 php artisan migrate --seed
 ```
-
+## Docker install
+```
+docker-compose up -d
+```
+If you are not familiar with docker-compose, you can refer to my project [kyronbao/laravel-docker-compose](https://github.com/kyronbao/laravel-docker-compose).
 ## Documentation
 - [https://documenter.getpostman.com/view/7190486/S1Lr5rht](https://documenter.getpostman.com/view/7190486/S1Lr5rht)
 
