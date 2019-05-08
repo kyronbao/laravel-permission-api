@@ -16,6 +16,7 @@ class CreateStuffs extends Migration
         Schema::create('stuffs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('username', 64);
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('admin_token');
             $table->timestamps();

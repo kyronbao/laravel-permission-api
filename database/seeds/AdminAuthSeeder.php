@@ -21,6 +21,7 @@ class AdminAuthSeeder extends Seeder
             Stuff::create([
                 'id' => $key + 1,
                 'username' => $stuff,
+                'email' => $stuff . '@admin.com',
                 'password' => Hash::make('12345678'),
                 'admin_token' => hash('sha256', 'token_string'),
             ]);

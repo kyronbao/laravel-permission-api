@@ -28,6 +28,7 @@ $factory->define(User::class, function (Faker $faker) {
 $factory->define(Admin\Models\Stuff::class, function (Faker $faker) {
     return [
         'username' => 'kyronbao',
+        'email' => 'kyronbao@gmail.com',
         'password' => '12345678',
         'admin_token' => hash('sha256', 'token_string'),
     ];
