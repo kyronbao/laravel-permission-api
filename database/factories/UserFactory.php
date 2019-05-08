@@ -2,6 +2,7 @@
 
 use App\User;
 use Faker\Generator as Faker;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /*
@@ -29,7 +30,7 @@ $factory->define(Admin\Models\Stuff::class, function (Faker $faker) {
     return [
         'username' => 'kyronbao',
         'email' => 'kyronbao@gmail.com',
-        'password' => '12345678',
+        'password' => Hash::make('12345678'),
         'admin_token' => hash('sha256', 'token_string'),
     ];
 });

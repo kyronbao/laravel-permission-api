@@ -17,9 +17,9 @@ class StuffTest extends TestCase
             'username' => 'kyronbao'
         ]);
 
-        $response = $this->post('/admin/login', [
+        $response = $this->post('/admin/auth/register', [
             'username' => 'kyronbao',
-            'user'      => 'Jim',
+            'email' => 'kyronbao@gmail.com',
             'password' => '12345678'
         ]);
 
@@ -36,9 +36,8 @@ class StuffTest extends TestCase
     {
         factory(\Admin\Models\Stuff::class)->create();
 
-        $response = $this->post('/admin/login', [
+        $response = $this->post('/admin/auth/login', [
             'username' => 'kyronbao',
-            'user' => 'Jim',
             'password' => '12345678'
         ]);
 
@@ -50,7 +49,7 @@ class StuffTest extends TestCase
     public function test_get_stuff_info_with_cookie()
     {
         factory(\Admin\Models\Stuff::class)->create();
-        $response = $this->call('GET', '/admin/stuff', [], [
+        $response = $this->call('GET', '/admin/auth/stuff', [], [
             'admin_token' => 'token_string'
         ]);
         $response->assertJson(Err::OUTPUT_OK);
@@ -60,14 +59,14 @@ class StuffTest extends TestCase
     public function test_cannot_get_stuff_info_without_cookie()
     {
         factory(\Admin\Models\Stuff::class)->create();
-        $response = $this->call('GET', '/admin/stuff');
+        $response = $this->call('GET', '/admin/auth/stuff');
         $response->assertJson(Err::AUTH_NOT_LOGGED);
     }
 
     public function test_logout()
     {
         factory(\Admin\Models\Stuff::class)->create();
-        $response = $this->call('POST', '/admin/logout', [], [
+        $response = $this->call('POST', '/admin/auth/logout', [], [
             'admin_token' => 'token_string'
         ]);
         $response->assertJson(Err::OUTPUT_OK);
@@ -76,7 +75,7 @@ class StuffTest extends TestCase
     public function test_cannot_logout_without_cookie()
     {
         factory(\Admin\Models\Stuff::class)->create();
-        $response = $this->call('POST', '/admin/logout');
+        $response = $this->call('POST', '/admin/auth/logout');
         $response->assertJson(Err::AUTH_NOT_LOGGED);
     }
 
