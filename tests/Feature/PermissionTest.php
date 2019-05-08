@@ -12,23 +12,15 @@ class PermissionTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * 其他测试用例如
-     * test_post_roles,
-     * test_get_menus,
-     * test_post_munes
-     * post_roles_via_user
-     * post_routes_via_role
-     * 由于逻辑大体相同，所以不写测试了
-     *
+     * TODO 测试用例
      */
-
 
     public function test_get_roles()
     {
         factory(\Admin\Models\Stuff::class)->create();
-        $response = $this->call('GET', 'admin/get-roles', [], [
-            'admin_token' => md5(123456)
+        $response = $this->call('GET', 'admin/auth/get-roles', [], [
+            'admin_token' => 'token_string',
         ]);
-        $response->assertJson(Err::OUTPUT_OK);
+        $response->assertJson(Err::AUTH_FORBIDDEN);
     }
 }
