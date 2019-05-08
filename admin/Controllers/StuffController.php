@@ -24,6 +24,17 @@ class StuffController
         return StuffService::server()->login($params);
     }
 
+    public function register(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|unique:stuffs',
+            'email' => 'required|string|email|unique:stuffs',
+            'password' => 'required|string',
+        ]);
+        $params = $request->only('username', 'email', 'password');
+        return StuffService::server()->register($params);
+    }
+
     public function getStuff()
     {
         return StuffService::server()->getStuff();
