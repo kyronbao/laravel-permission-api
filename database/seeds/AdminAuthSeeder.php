@@ -27,11 +27,12 @@ class AdminAuthSeeder extends Seeder
             ]);
         }
 
-        $roles = ['super-admin', 'projector', 'coder'];
+        $roles = [['super-admin', '超级管理'], ['projector', '项目经理'], ['coder', '码农']];
         foreach ($roles as $key => $role) {
             Role::create([
                 'id' => $key + 1,
-                'name' => $role,
+                'name' => $role[0],
+                'name_cn' => $role[1],
                 'guard_name' => Stuff::GUARD,
             ]);
         }
